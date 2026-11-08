@@ -1,0 +1,279 @@
+:root {
+    --text: #111827;
+    --muted: #6b7280;
+
+    --pink-50: #fff1f6;
+    --pink-500: #ff5fa2;
+    --pink-700: #d81b72;
+
+    --shadow: 0 16px 46px rgba(17, 24, 39, 0.12);
+    --max: 1120px;
+
+    --pad: 24px;
+    --pad-sm: 18px;
+}
+
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+        Arial;
+    color: var(--text);
+    background: #fff;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding-inline: var(--pad);
+}
+@media (max-width: 640px) {
+    .container {
+        padding-inline: var(--pad-sm);
+    }
+}
+
+/* navbar */
+.topbar {
+    background: linear-gradient(135deg, var(--pink-500), #ff86bb);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+}
+.topbar-inner {
+    height: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 10px 22px rgba(17, 24, 39, 0.12);
+    line-height: 0;
+}
+.logo-svg {
+    display: block;
+}
+.brand-text {
+    font-family: "Dancing Script", cursive;
+    font-size: 26px;
+    color: #fff;
+    text-shadow: 0 8px 18px rgba(17, 24, 39, 0.18);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 850;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-nav {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--pink-700);
+    border-color: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 12px 26px rgba(17, 24, 39, 0.12);
+}
+
+/* bg */
+.auth-bg {
+    background: radial-gradient(
+            900px 380px at 12% 25%,
+            rgba(255, 95, 162, 0.18),
+            transparent 60%
+        ),
+        radial-gradient(
+            900px 380px at 88% 20%,
+            rgba(255, 95, 162, 0.12),
+            transparent 55%
+        ),
+        repeating-linear-gradient(
+            90deg,
+            var(--pink-50) 0px,
+            var(--pink-50) 52px,
+            #fff 52px,
+            #fff 104px
+        );
+    min-height: calc(100vh - 66px);
+    padding-block: 34px;
+}
+
+.auth-wrap {
+    width: 100%;
+    max-width: 860px;
+    margin-inline: auto;
+}
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+/* tabs slider */
+.tabs {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.tab {
+    padding: 14px 12px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-weight: 900;
+    color: #7a204b;
+    z-index: 2;
+}
+.tab-indicator {
+    pointer-events: none;
+    position: absolute;
+    inset: 6px auto 6px 6px;
+    width: calc(50% - 6px);
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--pink-500), #ff86bb);
+    box-shadow: 0 14px 30px rgba(255, 95, 162, 0.25);
+    transition: transform 0.18s ease;
+}
+.auth-wrap[data-active="register"] .tab-indicator {
+    transform: translateX(100%);
+}
+.auth-wrap[data-active="login"] .tab[data-tab="login"],
+.auth-wrap[data-active="register"] .tab[data-tab="register"] {
+    color: #fff;
+}
+
+.content {
+    padding: 22px;
+}
+@media (max-width: 520px) {
+    .content {
+        padding: 16px;
+    }
+}
+
+/* only one form visible */
+.panel {
+    display: none;
+}
+.panel.is-active {
+    display: block;
+}
+
+.panel h1 {
+    margin: 0 0 6px;
+    font-size: 24px;
+    letter-spacing: -0.2px;
+}
+.sub {
+    margin: 0 0 16px;
+    color: var(--muted);
+}
+
+.form {
+    display: grid;
+    gap: 10px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 800;
+    margin-top: 2px;
+}
+
+input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    outline: none;
+    background: #fff;
+    font-size: 14px;
+}
+
+/* roze fokus */
+input:focus {
+    border-color: rgba(255, 95, 162, 0.65);
+    box-shadow: 0 0 0 4px rgba(255, 95, 162, 0.14);
+}
+
+/* roze za polje koje je palo validaciju */
+.is-invalid {
+    border-color: rgba(255, 95, 162, 0.85) !important;
+    box-shadow: 0 0 0 4px rgba(255, 95, 162, 0.16);
+}
+
+/* poruka ispod inputa */
+.field-error {
+    margin-top: -4px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #7a204b;
+}
+
+.grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+@media (max-width: 700px) {
+    .grid2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-primary {
+    margin-top: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--pink-500), #ff86bb);
+    color: #fff;
+    box-shadow: 0 16px 34px rgba(255, 95, 162, 0.3);
+}
+.btn-primary:hover {
+    box-shadow: 0 20px 42px rgba(255, 95, 162, 0.36);
+}
+
+.btn-secondary {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #7a204b;
+    border: 1px solid rgba(255, 95, 162, 0.22);
+    box-shadow: 0 12px 24px rgba(17, 24, 39, 0.08);
+}
+
+.hint {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+}

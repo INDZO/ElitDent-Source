@@ -1,0 +1,226 @@
+<div class="dash booking-shell">
+  <button
+    type="button"
+    class="booking-overlay"
+    [class.is-visible]="sidebarOpen"
+    aria-label="Zatvori meni"
+    (click)="closeSidebar()"
+  ></button>
+
+  <aside class="sidebar" id="booking-sidebar" [class.is-open]="sidebarOpen">
+    <a class="side-logo" [href]="backendUrl('/pacijent/profil')">
+      <span class="logo-tooth" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M9.2 3.5c-2.9 0-5.2 2.2-5.2 5.1 0 2.2.8 3.8 1.6 5.2.5.9 1 1.7 1.2 2.6.4 1.9.6 4.3 1.9 5.6.8.8 2 .8 2.8.1.7-.7.9-1.8 1.1-2.8.3-1.3.4-2.4 1.6-2.4 1.1 0 1.3 1.1 1.6 2.4.2 1 .4 2.1 1.1 2.8.8.7 2 .7 2.8-.1 1.3-1.3 1.5-3.7 1.9-5.6.2-.9.7-1.7 1.2-2.6.8-1.4 1.6-3 1.6-5.2 0-2.9-2.3-5.1-5.2-5.1-1.2 0-2 .2-2.8.6-.7.3-1.3.6-2.2.6s-1.5-.3-2.2-.6c-.8-.4-1.6-.6-2.8-.6Z" fill="#ffffff" opacity="0.95"/>
+        </svg>
+      </span>
+      <span class="side-name">ElitDent</span>
+    </a>
+
+    <nav class="side-nav">
+      <a class="side-link" [href]="backendUrl('/pacijent/profil')">Profil</a>
+      <a class="side-link" [href]="backendUrl('/pacijent/karton')">Stomatoloski karton</a>
+      <a class="side-link active" routerLink="/booking">Zakazivanje</a>
+      <a class="side-link" [href]="backendUrl('/pacijent/termini')">Termini</a>
+    </nav>
+
+    <div class="side-footer">
+      <div>
+        <div class="who-name">{{ currentUser?.Ime || 'Pacijent' }} {{ currentUser?.Prezime || '' }}</div>
+        <div class="who-mail">{{ currentUser?.Email || 'Angular API sesija' }}</div>
+      </div>
+      <button class="btn btn-logout" type="button" (click)="logout()">Odjavi se</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="dash-topbar">
+      <button
+        type="button"
+        class="booking-menu-btn"
+        aria-label="Otvori meni"
+        aria-controls="booking-sidebar"
+        [attr.aria-expanded]="sidebarOpen"
+        (click)="toggleSidebar()"
+      >&#9776;</button>
+      <div class="top-title">Zakazivanje</div>
+    </header>
+
+    <section class="page-content">
+      @if (message) {
+        <div class="flash ok">{{ message }}</div>
+      }
+
+      @if (error) {
+        <div class="flash err">{{ error }}</div>
+      }
+
+      @if (loadingServices) {
+        <div class="flash info">Ucitavanje usluga...</div>
+      }
+
+      <div class="row">
+        <div>
+          <h1 class="h1">Zakazivanje termina</h1>
+          <p class="muted">Izaberi uslugu, tim/doktora i termin koji ti odgovara.</p>
+        </div>
+      </div>
+
+      <form (ngSubmit)="submit()" class="panel form">
+        <div class="bk-grid">
+          <div>
+            <label>Usluga</label>
+            <select name="serviceId" [(ngModel)]="serviceId" (change)="onServiceChange()">
+              <option value="">— Izaberi uslugu —</option>
+              @for (service of services; track service.id) {
+                <option [value]="service.id">
+                  {{ service.naziv }}
+                </option>
+              }
+            </select>
+            <div class="bk-hint">
+              @if (serviceId) {
+                @for (service of services; track service.id) {
+                  @if (service.id === serviceId) {
+                    {{ service.trajanje }} min • {{ service.cena }} RSD
+                  }
+                }
+              }
+            </div>
+          </div>
+
+          <div>
+            <label>Tim / Doktor</label>
+            <select name="teamId" [(ngModel)]="teamId" (change)="onTeamChange()" [disabled]="teams.length === 0">
+              <option value="">{{ loadingTeams ? '— Učitavanje timova —' : '— Prvo izaberi uslugu —' }}</option>
+              @for (team of teams; track team.id) {
+                <option [value]="team.id">{{ team.naziv }} — {{ team.vodja }} ({{ team.clanova }} čl.)</option>
+              }
+            </select>
+            <div class="bk-hint">
+              @if (loadingTeams) {
+                Učitavanje timova...
+              } @else if (teams.length > 0) {
+                Izaberi ko realizuje uslugu.
+              } @else if (serviceId) {
+                Nema timova koji nude ovu uslugu.
+              }
+            </div>
+          </div>
+        </div>
+
+        @if (loadingDays) {
+          <div class="bk-loading-panel">Provera dostupnih dana i zauzetih termina...</div>
+        }
+
+        @if (days.length > 0) {
+          <div class="bk-stage bk-calendar-stage">
+            <div class="bk-calendar-header">
+              <div>
+                <div class="bk-stage-title">Izaberi datum</div>
+                <div class="bk-small muted">Dostupni dani su označeni roze bojom.</div>
+              </div>
+              <div class="bk-calendar-nav">
+                <button
+                  type="button"
+                  class="bk-calendar-arrow"
+                  aria-label="Prethodni mesec"
+                  title="Prethodni mesec"
+                  [disabled]="!canShowPreviousMonth()"
+                  (click)="changeCalendarMonth(-1)"
+                >&#8249;</button>
+                <div class="bk-calendar-month">{{ calendarTitle() }}</div>
+                <button
+                  type="button"
+                  class="bk-calendar-arrow"
+                  aria-label="Sledeći mesec"
+                  title="Sledeći mesec"
+                  [disabled]="!canShowNextMonth()"
+                  (click)="changeCalendarMonth(1)"
+                >&#8250;</button>
+              </div>
+            </div>
+
+            <div class="bk-calendar" role="grid" aria-label="Kalendar dostupnih termina">
+              @for (weekDay of weekDays; track weekDay) {
+                <div class="bk-calendar-weekday" role="columnheader">{{ weekDay }}</div>
+              }
+              @for (cell of calendarCells(); track cell.date) {
+                <button
+                  type="button"
+                  class="bk-calendar-day"
+                  [class.is-outside]="!cell.inMonth"
+                  [class.is-available]="cell.available && cell.inMonth"
+                  [class.is-selected]="date === cell.date"
+                  [disabled]="!cell.available || !cell.inMonth"
+                  [attr.aria-label]="cell.available && cell.inMonth ? 'Izaberi ' + cell.date : 'Nema termina ' + cell.date"
+                  [attr.aria-selected]="date === cell.date"
+                  (click)="selectDay(cell.date)"
+                >
+                  <span>{{ cell.dayNumber }}</span>
+                  @if (cell.available && cell.inMonth) {
+                    <span class="bk-calendar-dot" aria-hidden="true"></span>
+                  }
+                </button>
+              }
+            </div>
+
+            <div class="bk-calendar-summary">
+              <span class="bk-calendar-legend"><span class="bk-calendar-dot"></span> Slobodan dan</span>
+              <span>{{ days.length }} dostupnih dana</span>
+            </div>
+          </div>
+        }
+
+        @if (date) {
+          <div class="bk-stage bk-timeline-stage">
+            <div class="bk-stage-head">
+              <div>
+                <div class="bk-stage-title">Dnevni raspored</div>
+                <div class="bk-timeline-date">{{ selectedDateTitle() }}</div>
+              </div>
+              <div class="bk-small muted bk-timeline-count">
+                @if (slots.length > 0) {
+                  {{ slots.length }} slobodnih termina
+                } @else {
+                  Nema slobodnih termina tog dana.
+                }
+              </div>
+            </div>
+
+            @if (loadingSlots) {
+              <div class="bk-timeline-empty">Učitavanje slobodnih termina...</div>
+            } @else if (slots.length > 0) {
+            <div class="bk-timeline" role="list" aria-label="Slobodni termini za izabrani datum">
+              @for (slot of slots; track slot) {
+                <button
+                  type="button"
+                  class="bk-time-row"
+                  [class.is-selected]="time === slot"
+                  [attr.aria-pressed]="time === slot"
+                  (click)="selectSlot(slot)"
+                >
+                  <span class="bk-time-axis">{{ slot }}</span>
+                  <span class="bk-time-marker" aria-hidden="true"></span>
+                  <span class="bk-time-block">
+                    <span class="bk-time-range">{{ slot }}–{{ slotEndTime(slot) }}</span>
+                    <span class="bk-time-meta">Slobodan termin · {{ serviceDuration() }} min</span>
+                  </span>
+                </button>
+              }
+            </div>
+            } @else {
+              <div class="bk-timeline-empty">Za ovaj datum trenutno nema slobodnih termina.</div>
+            }
+          </div>
+        }
+
+        <div class="bk-actions">
+          <button class="btn btn-primary" type="submit" [disabled]="loading || !serviceId || !teamId || !date || !time">
+            Potvrdi zakazivanje
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>

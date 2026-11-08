@@ -1,0 +1,322 @@
+.d-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 8px 0 14px;
+}
+.d-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-weight: 900;
+    cursor: pointer;
+}
+.d-tab.active {
+    border-color: rgba(255, 95, 162, 0.85);
+    box-shadow: 0 0 0 4px rgba(255, 95, 162, 0.14);
+    background: rgba(255, 95, 162, 0.1);
+}
+
+/* Calendar */
+.d-month {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.d-month-label {
+    font-weight: 900;
+    color: #374151;
+    min-width: 180px;
+    text-align: center;
+}
+
+.d-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 900;
+    text-align: center;
+}
+.d-cal {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+.d-day {
+    height: 52px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-weight: 900;
+    cursor: pointer;
+    position: relative;
+}
+.d-empty {
+    border: none;
+    background: transparent;
+    cursor: default;
+}
+.d-day:hover {
+    border-color: rgba(255, 95, 162, 0.35);
+}
+
+.d-day.selected {
+    border-color: rgba(255, 95, 162, 0.85);
+    box-shadow: 0 0 0 4px rgba(255, 95, 162, 0.14);
+    background: rgba(255, 95, 162, 0.08);
+}
+
+.d-badge {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    min-width: 22px;
+    height: 18px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.06);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* na užim ekranima malo više “gore” */
+@media (max-width: 520px) {
+    .d-badge {
+        top: 4px;
+        right: 6px;
+    }
+}
+
+/* Day details */
+.d-details-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.d-details-title {
+    font-weight: 900;
+}
+.d-muted {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* Pills + list */
+.d-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+.d-card {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 18px;
+    padding: 12px;
+    background: #fff;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.d-title {
+    font-weight: 900;
+}
+.d-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+.d-pill {
+    padding: 8px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: rgba(255, 95, 162, 0.05);
+    font-weight: 800;
+    font-size: 12px;
+    color: #374151;
+}
+.d-actions {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+/* ===== VERTICAL TIMELINE ===== */
+.vt {
+    margin-top: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 18px;
+    padding: 12px;
+    background: #fff;
+    box-shadow: var(--shadow);
+}
+.vt-wrap {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 10px;
+}
+.vt-times {
+    position: relative;
+}
+.vt-time {
+    height: var(--vt-hour, 72px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding-top: 2px;
+    font-size: 12px;
+    font-weight: 900;
+    color: #374151;
+}
+.vt-area {
+    position: relative;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+}
+.vt-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.vt-block {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 18px rgba(17, 24, 39, 0.1);
+    padding: 10px 12px;
+    overflow: hidden;
+}
+
+/* ✅ Sadržaj bloka:
+     Wide: vreme + usluga + pacijent + status
+     Narrow: levo vreme, desno status */
+.vt-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.vt-tr {
+    flex: 0 0 auto;
+    font-weight: 900;
+    font-size: 12px;
+    color: #374151;
+}
+.vt-svc {
+    flex: 1 1 auto;
+    font-weight: 900;
+    font-size: 12px;
+    color: #111827;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.vt-pat {
+    flex: 1 1 auto;
+    font-weight: 800;
+    font-size: 12px;
+    color: #374151;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.vt-st {
+    flex: 0 0 auto;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #fff;
+    font-weight: 900;
+    font-size: 12px;
+    color: #111827;
+}
+
+/* ✅ narrow: sakrij uslugu/pacijenta, ostavi vreme + status */
+@media (max-width: 720px) {
+    .vt-svc,
+    .vt-pat {
+        display: none;
+    }
+    .vt-row {
+        justify-content: space-between;
+    }
+}
+
+.vt-zak {
+    background: rgba(255, 95, 162, 0.14);
+    border-color: rgba(255, 95, 162, 0.35);
+}
+.vt-rea {
+    background: rgba(59, 130, 246, 0.14);
+    border-color: rgba(59, 130, 246, 0.35);
+}
+.vt-otk {
+    background: rgba(107, 114, 128, 0.14);
+    border-color: rgba(107, 114, 128, 0.3);
+}
+
+/* modal (patient-like) */
+.ap-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+}
+.ap-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.45);
+}
+.ap-modal-box {
+    position: relative;
+    width: min(560px, 92vw);
+    margin: 8vh auto;
+    background: #fff;
+    border-radius: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 30px 80px rgba(17, 24, 39, 0.25);
+    overflow: hidden;
+}
+.ap-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.ap-modal-title {
+    font-weight: 900;
+}
+.ap-x {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    cursor: pointer;
+    font-weight: 900;
+}
+.ap-modal-body {
+    padding: 16px;
+}

@@ -1,0 +1,134 @@
+.bk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+@media (max-width: 980px) {
+    .bk-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bk-hint {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.bk-stage {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background: #fff;
+    box-shadow: var(--shadow);
+}
+
+.bk-stage-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.bk-stage-title {
+    font-weight: 900;
+}
+
+.bk-month {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.bk-month-label {
+    font-weight: 900;
+    color: #374151;
+    min-width: 180px;
+    text-align: center;
+}
+
+.bk-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 900;
+    text-align: center;
+}
+
+.bk-calendar {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.bk-day {
+    height: 44px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-weight: 900;
+    cursor: pointer;
+}
+.bk-empty {
+    border: none;
+    background: transparent;
+}
+.bk-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+.bk-available {
+    border-color: rgba(255, 95, 162, 0.25);
+    background: rgba(255, 95, 162, 0.06);
+}
+.bk-available:hover {
+    border-color: rgba(255, 95, 162, 0.45);
+    background: rgba(255, 95, 162, 0.1);
+}
+.bk-selected {
+    border-color: rgba(255, 95, 162, 0.85) !important;
+    box-shadow: 0 0 0 4px rgba(255, 95, 162, 0.14);
+    background: rgba(255, 95, 162, 0.12) !important;
+}
+
+.bk-small {
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.bk-slots {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.bk-slot {
+    min-width: 86px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-weight: 900;
+    cursor: pointer;
+}
+.bk-slot:hover {
+    border-color: rgba(255, 95, 162, 0.45);
+    background: rgba(255, 95, 162, 0.06);
+}
+.bk-slot-selected {
+    border-color: rgba(255, 95, 162, 0.85) !important;
+    box-shadow: 0 0 0 4px rgba(255, 95, 162, 0.14);
+    background: rgba(255, 95, 162, 0.12) !important;
+}
+
+.bk-actions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: flex-end;
+}
