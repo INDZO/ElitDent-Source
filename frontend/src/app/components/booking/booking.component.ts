@@ -1,3 +1,4 @@
+import { DEMO_MODE } from "../../demo-mode";
 import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -11,6 +12,7 @@ import { BookingService } from '../../services/booking.service';
   templateUrl: './booking.component.html',
 })
 export class BookingComponent implements OnInit {
+  readonly demoMode = DEMO_MODE;
   readonly backendOrigin = window.location.port === '4200' ? 'http://127.0.0.1:8000' : '';
   readonly weekDays = ['Pon', 'Uto', 'Sre', 'Cet', 'Pet', 'Sub', 'Ned'];
   services: any[] = [];
@@ -42,6 +44,11 @@ export class BookingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.demoMode) {
+      this.currentUser = { Ime: 'Demo', Prezime: 'pacijent', Email: 'Fiktivni profil' };
+      this.loadServices();
+      return;
+    }
     if (!this.auth.isLoggedIn()) {
       this.router.navigateByUrl('/login');
       return;
@@ -286,6 +293,7 @@ export class BookingComponent implements OnInit {
           this.message = response.message || 'Termin je zakazan.';
           this.loading = false;
           this.cdr.detectChanges();
+          if (this.demoMode) { this.time = ''; this.cdr.detectChanges(); return; }
           window.location.href = this.backendUrl('/pacijent/termini?status=Zakazan&created=1');
         },
         error: (error) => {

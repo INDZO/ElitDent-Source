@@ -74,6 +74,15 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "demo": {
+              "baseHref": "/",
+              "fileReplacements": [
+                {
+                  "replace": "src/app/demo-mode.ts",
+                  "with": "src/app/demo-mode.demo.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

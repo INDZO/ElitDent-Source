@@ -1,3 +1,4 @@
+import { DEMO_MODE, bookingDemo } from "../demo-mode";
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 
@@ -18,6 +19,7 @@ export class BookingService {
   }
 
   private fetchJson(url: string, options: RequestInit = {}): Promise<any> {
+    if (DEMO_MODE) return bookingDemo(url, options);
     return fetch(url, {
       ...options,
       headers: {

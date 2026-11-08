@@ -875,3 +875,5 @@ input:focus, textarea:focus, select:focus {
   }
   .bk-calendar-summary { font-size: 11px; }
 }
+
+.booking-demo-banner { position:relative; z-index:20; padding:11px 16px; text-align:center; background:#fde7f1; color:#662043; font-size:14px; border-bottom:1px solid #eab7cc; }
