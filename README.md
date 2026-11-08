@@ -1,6 +1,6 @@
 # ElitDent
 
-**Dental practice information system · 2026 Information Systems project**
+**Dental practice information system · Information Systems and Internet Application Programming**
 
 ElitDent combines a Laravel backend, Angular client and MySQL data model. Role-specific screens cover appointments, dentist schedules, patient records, and service and team administration.
 
@@ -14,6 +14,10 @@ ElitDent combines a Laravel backend, Angular client and MySQL data model. Role-s
 - `docs/`: [Original seminar paper (DOCX)](docs/ISElitDent-documentation.docx) and [EER diagram](docs/eer-model.png).
 
 The Serbian seminar paper covers requirements, Structured Systems Analysis, context and decomposition diagrams, a data dictionary, an EER model, and the relational schema. It describes the intended system. A requirement or diagram in the paper does not establish that a corresponding feature, such as billing, was implemented.
+
+## Booking demo mode
+
+[Open the live frontend demo ↗](https://indzo-elitdent-demo.vercel.app/) · The original Angular appointment screen lets visitors select a fictional service, team, day, and slot, then make a sample reservation. Changes reset on refresh. The demo has no sign-in, patient records, Laravel API, or MySQL connection. From `frontend/`, run `npm ci` and `npm run build:demo`, then serve `dist/frontend/browser/` with a static web server. The seminar paper documents the proposed system; the source contains wider practice workflows than the demo.
 
 ## Local development
 
