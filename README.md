@@ -17,7 +17,13 @@ The Serbian seminar paper covers requirements, Structured Systems Analysis, cont
 
 ## Booking demo mode
 
-[Open the live frontend demo ↗](https://indzo-elitdent-demo.vercel.app/) · The original Angular appointment screen lets visitors select a fictional service, team, day, and slot, then make a sample reservation. Changes reset on refresh. The demo has no sign-in, patient records, Laravel API, or MySQL connection. From `frontend/`, run `npm ci` and `npm run build:demo`, then serve `dist/frontend/browser/` with a static web server. The seminar paper documents the proposed system; the source contains wider practice workflows than the demo.
+[Open the live frontend demo ↗](https://indzo-elitdent-demo.vercel.app/)
+
+**Interactive frontend demo · Fictional data · No live backend**
+
+Choose a sample service, team, day, and time in the original Angular scheduler. Actions stay in browser memory and reset on refresh. This repository also contains the actual Laravel application and MySQL migrations. The seminar paper describes the proposed system, and the source implements workflows beyond the demo.
+
+To run the demo locally, run `npm ci` and `npm run build:demo` in `frontend/`, then serve `dist/frontend/browser/` with a static web server.
 
 ## Local development
 
